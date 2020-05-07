@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
-import { CreateTaskDTO } from './dto/task.dto';
-import { Task } from './models/task';
+import { CreateTaskDTO } from './dto/createTask.dto';
+import { Task, TaskStatus } from './models/task';
+import { UpdateTaskDTO } from './dto/updateTask.dto';
 
 @Injectable()
 export class TaskService {
@@ -21,6 +22,7 @@ export class TaskService {
     const task: Task = {
       id: uuid(),
       title,
+      status: TaskStatus.OPEN,
       description,
       dateTimeCreated: new Date(),
       dateTimeModified: new Date(),
@@ -32,7 +34,7 @@ export class TaskService {
   }
 
   deleteTaskById(id: string): Task | undefined {
-    const taskToDelete = this.tasks.find((task) => task.id === id);
+    const taskToDelete = this.findTaskById(id);
 
     if (!taskToDelete) {
       return undefined;
@@ -41,5 +43,29 @@ export class TaskService {
     this.tasks = this.tasks.filter((task) => task.id !== id);
 
     return taskToDelete;
+  }
+
+  updateTask(updateTaskDTO: UpdateTaskDTO): Task | undefined {
+    const taskToUpdate = this.findTaskById(updateTaskDTO.title);
+
+    if (!taskToUpdate) {
+      return undefined;
+    }
+
+    taskToUpdate.title = updateTaskDTO.title
+      ? updateTaskDTO.title
+      : taskToUpdate.title;
+
+    taskToUpdate.description = updateTaskDTO.description
+      ? updateTaskDTO.description
+      : taskToUpdate.description;
+
+    taskToUpdate.status = updateTaskDTO.status
+      ? updateTaskDTO.status
+      : taskToUpdate.status;
+
+    taskToUpdate.dateTimeModified = new Date();
+
+    return taskToUpdate;
   }
 }

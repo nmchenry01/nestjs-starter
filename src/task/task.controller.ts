@@ -6,10 +6,14 @@ import {
   Param,
   Delete,
   NotFoundException,
+  Patch,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Task } from './models/task';
-import { CreateTaskDTO } from './dto/task.dto';
+import { CreateTaskDTO } from './dto/createTask.dto';
 import { TaskService } from './task.service';
+import { UpdateTaskDTO } from './dto/updateTask.dto';
 
 @Controller('task')
 export class TaskController {
@@ -32,6 +36,7 @@ export class TaskController {
   }
 
   @Post()
+  @UsePipes(ValidationPipe)
   createTask(@Body() createTaskDTO: CreateTaskDTO): Task {
     return this.taskService.createTask(createTaskDTO);
   }
@@ -45,5 +50,19 @@ export class TaskController {
     }
 
     return taskToDelete;
+  }
+
+  @Patch()
+  @UsePipes(ValidationPipe)
+  updateTask(@Body() updateTaskDTO: UpdateTaskDTO): Task {
+    const taskToUpdate = this.taskService.updateTask(updateTaskDTO);
+
+    if (!taskToUpdate) {
+      throw new NotFoundException(
+        `Task to update with ID ${updateTaskDTO.id} not found`,
+      );
+    }
+
+    return taskToUpdate;
   }
 }
