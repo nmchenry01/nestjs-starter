@@ -11,7 +11,7 @@ import {
   ValidationPipe,
   Query,
 } from '@nestjs/common';
-import { Task } from './models/task';
+import { Task } from './models/task.entity';
 import { CreateTaskDTO } from './dto/createTask.dto';
 import { TaskService } from './task.service';
 import { UpdateTaskDTO } from './dto/updateTask.dto';
