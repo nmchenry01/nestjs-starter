@@ -1,0 +1,39 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      # Update these with the variables set in the .env file
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: nestjs-starter
+    volumes:
+      - ./.postgres:/var/lib/postgresql/data
+  nestjs-starter:
+    build: .
+    container_name: nestjs-starter
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+    command:
+      [
+        './scripts/wait-for-it.sh',
+        'postgres:5432',
+        '--',
+        'npm',
+        'run',
+        'start:dev',
+      ]
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9000:8080
+volumes:
+  my_data:

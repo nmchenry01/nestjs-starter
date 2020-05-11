@@ -1,0 +1,7 @@
+node_modules/
+.postgres
+.vscode/
+*.log
+dist/
+Dockerfile
+docker-compose.yml
