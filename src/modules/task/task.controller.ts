@@ -21,19 +21,19 @@ import { FilterTaskDTO } from './dto/filterTask.dto';
 export class TaskController {
   constructor(private taskService: TaskService) {}
 
-  @Get()
-  @UsePipes(ValidationPipe)
-  getTasks(@Query() filterTaskDTO: FilterTaskDTO): Task[] {
-    if (Object.keys(filterTaskDTO).length === 0) {
-      return this.taskService.findAllTasks();
-    }
+  // @Get()
+  // @UsePipes(ValidationPipe)
+  // getTasks(@Query() filterTaskDTO: FilterTaskDTO): Task[] {
+  //   if (Object.keys(filterTaskDTO).length === 0) {
+  //     return this.taskService.findAllTasks();
+  //   }
 
-    return this.taskService.findTasks(filterTaskDTO);
-  }
+  //   return this.taskService.findTasks(filterTaskDTO);
+  // }
 
   @Get('/:id')
-  getTask(@Param('id') id: string): Task {
-    const task = this.taskService.findTaskById(id);
+  async getTask(@Param('id') id: string): Promise<Task> {
+    const task = await this.taskService.findTaskById(id);
 
     if (!task) {
       throw new NotFoundException(`Task with ID ${id} not found`);
@@ -44,19 +44,17 @@ export class TaskController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  createTask(@Body() createTaskDTO: CreateTaskDTO): Task {
+  async createTask(@Body() createTaskDTO: CreateTaskDTO): Promise<Task> {
     return this.taskService.createTask(createTaskDTO);
   }
 
   @Delete('/:id')
-  deleteTask(@Param('id') id: string): Task {
-    const taskToDelete = this.taskService.deleteTaskById(id);
+  async deleteTask(@Param('id') id: string): Promise<void> {
+    const taskToDelete = await this.taskService.deleteTaskById(id);
 
     if (!taskToDelete) {
       throw new NotFoundException(`Task to delete with ID ${id} not found`);
     }
-
-    return taskToDelete;
   }
 
   @Patch()

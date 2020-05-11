@@ -1,5 +1,5 @@
 import { IsOptional, IsUUID, IsString, IsIn } from 'class-validator';
-import { TaskStatus } from '../models/task';
+import { TaskStatus } from '../enum/taskStatus.enum';
 
 export class UpdateTaskDTO {
   @IsUUID()

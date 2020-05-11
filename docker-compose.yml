@@ -20,7 +20,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - .:/app
+      - ./src:/app/src
     command:
       [
         './scripts/wait-for-it.sh',
