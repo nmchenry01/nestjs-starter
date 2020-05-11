@@ -46,26 +46,20 @@ export class TaskService {
   }
 
   updateTask(updateTaskDTO: UpdateTaskDTO): Task | undefined {
-    const taskToUpdate = this.findTaskById(updateTaskDTO.title);
+    const task = this.findTaskById(updateTaskDTO.id);
 
-    if (!taskToUpdate) {
+    if (!task) {
       return undefined;
     }
 
-    taskToUpdate.title = updateTaskDTO.title
-      ? updateTaskDTO.title
-      : taskToUpdate.title;
+    const updatedTask: Task = { ...task, ...updateTaskDTO };
 
-    taskToUpdate.description = updateTaskDTO.description
-      ? updateTaskDTO.description
-      : taskToUpdate.description;
+    updatedTask.dateTimeModified = new Date();
 
-    taskToUpdate.status = updateTaskDTO.status
-      ? updateTaskDTO.status
-      : taskToUpdate.status;
+    this.deleteTaskById(task.id);
 
-    taskToUpdate.dateTimeModified = new Date();
+    this.tasks.push(updatedTask);
 
-    return taskToUpdate;
+    return updatedTask;
   }
 }
