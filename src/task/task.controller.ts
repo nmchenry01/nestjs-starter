@@ -9,19 +9,26 @@ import {
   Patch,
   UsePipes,
   ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { Task } from './models/task';
 import { CreateTaskDTO } from './dto/createTask.dto';
 import { TaskService } from './task.service';
 import { UpdateTaskDTO } from './dto/updateTask.dto';
+import { FilterTaskDTO } from './dto/filterTask.dto';
 
 @Controller('task')
 export class TaskController {
   constructor(private taskService: TaskService) {}
 
   @Get()
-  getTasks(): Task[] {
-    return this.taskService.findAllTasks();
+  @UsePipes(ValidationPipe)
+  getTasks(@Query() filterTaskDTO: FilterTaskDTO): Task[] {
+    if (Object.keys(filterTaskDTO).length === 0) {
+      return this.taskService.findAllTasks();
+    }
+
+    return this.taskService.findTasks(filterTaskDTO);
   }
 
   @Get('/:id')

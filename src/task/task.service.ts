@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { CreateTaskDTO } from './dto/createTask.dto';
 import { Task, TaskStatus } from './models/task';
 import { UpdateTaskDTO } from './dto/updateTask.dto';
+import { FilterTaskDTO } from './dto/filterTask.dto';
 
 @Injectable()
 export class TaskService {
@@ -10,6 +11,27 @@ export class TaskService {
 
   findAllTasks(): Task[] {
     return this.tasks;
+  }
+
+  findTasks(filterTaskDTO: FilterTaskDTO): Task[] {
+    // Case for filtering by title
+    if (!filterTaskDTO.status) {
+      return this.tasks.filter((task) =>
+        task.title.toLowerCase().includes(filterTaskDTO.title.toLowerCase()),
+      );
+    }
+
+    // Case for filtering by status
+    if (!filterTaskDTO.title) {
+      return this.tasks.filter((task) => task.status === filterTaskDTO.status);
+    }
+
+    // Case for filtering by both
+    return this.tasks.filter(
+      (task) =>
+        task.title.toLowerCase().includes(filterTaskDTO.title.toLowerCase()) &&
+        task.status === filterTaskDTO.status,
+    );
   }
 
   findTaskById(id: string): Task {
