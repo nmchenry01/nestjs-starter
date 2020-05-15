@@ -4,7 +4,7 @@ import { TaskStatus } from '../enum/taskStatus.enum';
 export class FilterTaskDTO {
   @IsOptional()
   @IsString()
-  title?: string;
+  searchTerm?: string;
 
   @IsOptional()
   @IsIn([...Object.values(TaskStatus)])

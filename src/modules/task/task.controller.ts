@@ -21,15 +21,11 @@ import { FilterTaskDTO } from './dto/filterTask.dto';
 export class TaskController {
   constructor(private taskService: TaskService) {}
 
-  // @Get()
-  // @UsePipes(ValidationPipe)
-  // getTasks(@Query() filterTaskDTO: FilterTaskDTO): Task[] {
-  //   if (Object.keys(filterTaskDTO).length === 0) {
-  //     return this.taskService.findAllTasks();
-  //   }
-
-  //   return this.taskService.findTasks(filterTaskDTO);
-  // }
+  @Get()
+  @UsePipes(ValidationPipe)
+  async getTasks(@Query() filterTaskDTO: FilterTaskDTO): Promise<Task[]> {
+    return this.taskService.getTasks(filterTaskDTO);
+  }
 
   @Get('/:id')
   async getTask(@Param('id') id: string): Promise<Task> {
@@ -57,17 +53,16 @@ export class TaskController {
     }
   }
 
-  @Patch()
+  @Patch('/:id')
   @UsePipes(ValidationPipe)
-  updateTask(@Body() updateTaskDTO: UpdateTaskDTO): Task {
-    const taskToUpdate = this.taskService.updateTask(updateTaskDTO);
+  async updateTask(
+    @Param('id') id: string,
+    @Body() updateTaskDTO: UpdateTaskDTO,
+  ): Promise<void> {
+    const taskToUpdate = await this.taskService.updateTask(id, updateTaskDTO);
 
     if (!taskToUpdate) {
-      throw new NotFoundException(
-        `Task to update with ID ${updateTaskDTO.id} not found`,
-      );
+      throw new NotFoundException(`Task to update with ID ${id} not found`);
     }
-
-    return taskToUpdate;
   }
 }
