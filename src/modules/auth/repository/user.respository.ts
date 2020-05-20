@@ -1,26 +1,42 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { genSalt, hash } from 'bcrypt';
+import {
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { User } from '../models/user.entity';
 import { CreateUserDTO } from '../dto/createUser.dto';
+import { CreateUserResponse } from '../interfaces/createUserResponse';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async createUser(createUserDTO: CreateUserDTO): Promise<void> {
+  async createUser(createUserDTO: CreateUserDTO): Promise<CreateUserResponse> {
     const { username, password } = createUserDTO;
 
     const result = await this.hashPassword(password);
 
-    const user = this.create({
+    const partialUser = this.create({
       username,
       password: result.hashedPassword,
       salt: result.salt,
     });
 
     try {
-      await user.save();
+      const user = await partialUser.save();
+
+      return {
+        id: user.id,
+        username: user.username,
+        dateTimeCreated: user.dateTimeCreated,
+      };
     } catch (error) {
-      console.log(error);
-      console.log(typeof error);
+      if (error.code === '23505') {
+        throw new ConflictException(
+          `User with username ${username} already exists`,
+        );
+      } else {
+        throw new InternalServerErrorException();
+      }
     }
   }
 

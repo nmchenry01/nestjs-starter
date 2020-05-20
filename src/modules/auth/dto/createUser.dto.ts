@@ -1,5 +1,10 @@
 import { IsString, IsNotEmpty, Matches } from 'class-validator';
 
+// https://gist.github.com/arielweinberger/18a29bfa17072444d45adaeeb8e92ddc
+const passwordRegex = new RegExp(
+  /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).{8,32}$/,
+);
+
 export class CreateUserDTO {
   @IsString()
   @IsNotEmpty()
@@ -7,10 +12,8 @@ export class CreateUserDTO {
 
   @IsString()
   @IsNotEmpty()
-  @Matches(
-    '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|]).{8,32}$',
-    '',
-    { message: 'Password does not match complexity requirements' },
-  )
+  @Matches(passwordRegex, {
+    message: 'Password does not match complexity requirements',
+  })
   password: string;
 }
