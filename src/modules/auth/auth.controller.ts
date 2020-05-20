@@ -2,6 +2,7 @@ import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from './dto/createUser.dto';
 import { CreateUserResponse } from './interfaces/createUserResponse';
+import { SignInUserDTO } from './dto/signInUser.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -15,7 +16,9 @@ export class AuthController {
   }
 
   @Post('/signin')
-  async signin(): Promise<void> {
-    throw Error('Not implemented');
+  async signin(
+    @Body(ValidationPipe) signInUserDTO: SignInUserDTO,
+  ): Promise<void> {
+    return this.authService.signInUser(signInUserDTO);
   }
 }
