@@ -8,8 +8,9 @@ import {
 } from '@nestjs/common';
 import { User } from '../models/user.entity';
 import { CreateUserDTO } from '../dto/createUser.dto';
-import { CreateUserResponse } from '../interfaces/createUserResponse';
+import { CreateUserResponse } from '../interfaces/createUserResponse.interface';
 import { SignInUserDTO } from '../dto/signInUser.dto';
+import { JwtPayload } from '../interfaces/jwtPayload.interface';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -43,7 +44,7 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  async signInUser(signInUserDTO: SignInUserDTO): Promise<void> {
+  async signInUser(signInUserDTO: SignInUserDTO): Promise<JwtPayload> {
     const { username, password } = signInUserDTO;
 
     const user = await this.findOne({ username });
@@ -54,11 +55,13 @@ export class UserRepository extends Repository<User> {
       );
     }
 
-    const comparePasswordResult = await this.comparePassword(password, user);
+    const comparePasswordResult = await this.validatePassword(password, user);
 
     if (!comparePasswordResult) {
       throw new UnauthorizedException(`Passwords do not match`);
     }
+
+    return { username: user.username };
   }
 
   private async hashPassword(
@@ -69,7 +72,7 @@ export class UserRepository extends Repository<User> {
     return { hashedPassword, salt };
   }
 
-  private async comparePassword(
+  private async validatePassword(
     inputPassword: string,
     user: User,
   ): Promise<boolean> {
