@@ -1,4 +1,5 @@
 import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
+
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from './dto/createUser.dto';
 import { CreateUserResponse } from './interfaces/createUserResponse.interface';
