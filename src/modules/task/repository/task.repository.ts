@@ -2,15 +2,22 @@ import { Repository, EntityRepository } from 'typeorm';
 import { Task } from '../models/task.entity';
 import { CreateTaskDTO } from '../dto/createTask.dto';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
+import { User } from '../../auth/models/user.entity';
+import { CreateTaskResponse } from '../interfaces/createTaskResponse.interface';
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
-  async createTask(createTaskDTO: CreateTaskDTO): Promise<Task> {
+  async createTask(
+    user: User,
+    createTaskDTO: CreateTaskDTO,
+  ): Promise<CreateTaskResponse> {
     const partialTask = this.create(createTaskDTO);
+
+    partialTask.user = user;
 
     const task = await this.save(partialTask);
 
-    return task;
+    return this.buildCreateTaskResponse(task);
   }
 
   async getTasks(filterTaskDTO: FilterTaskDTO): Promise<Task[]> {
@@ -30,5 +37,27 @@ export class TaskRepository extends Repository<Task> {
     }
 
     return query.getMany();
+  }
+
+  private buildCreateTaskResponse(task: Task): CreateTaskResponse {
+    const {
+      id,
+      status,
+      description,
+      title,
+      userId,
+      dateTimeCreated,
+      dateTimeModified,
+    } = task;
+
+    return {
+      id,
+      status,
+      description,
+      title,
+      userId,
+      dateTimeCreated,
+      dateTimeModified,
+    };
   }
 }

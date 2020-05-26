@@ -5,6 +5,8 @@ import { Task } from './models/task.entity';
 import { UpdateTaskDTO } from './dto/updateTask.dto';
 import { FilterTaskDTO } from './dto/filterTask.dto';
 import { TaskRepository } from './repository/task.repository';
+import { User } from '../auth/models/user.entity';
+import { CreateTaskResponse } from './interfaces/createTaskResponse.interface';
 
 @Injectable()
 export class TaskService {
@@ -18,8 +20,11 @@ export class TaskService {
     return this.taskRepository.findOne({ id });
   }
 
-  async createTask(createTaskDTO: CreateTaskDTO): Promise<Task> {
-    return this.taskRepository.createTask(createTaskDTO);
+  async createTask(
+    user: User,
+    createTaskDTO: CreateTaskDTO,
+  ): Promise<CreateTaskResponse> {
+    return this.taskRepository.createTask(user, createTaskDTO);
   }
 
   async deleteTaskById(id: string): Promise<boolean> {
