@@ -14,8 +14,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { TaskStatus } from '../enum/taskStatus.enum';
+import { User } from '../../auth/models/user.entity';
 
 @Entity()
 export class Task extends BaseEntity {
@@ -30,6 +33,13 @@ export class Task extends BaseEntity {
 
   @Column()
   description: string;
+
+  @Column({ name: 'userId' })
+  userId: string;
+
+  @ManyToOne((type) => User, (user) => user.tasks)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 
   @CreateDateColumn()
   dateTimeCreated: Date;

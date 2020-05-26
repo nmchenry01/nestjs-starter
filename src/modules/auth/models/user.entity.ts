@@ -6,7 +6,9 @@ import {
   UpdateDateColumn,
   Entity,
   Unique,
+  OneToMany,
 } from 'typeorm';
+import { Task } from '../../task/models/task.entity';
 
 @Entity()
 @Unique(['username'])
@@ -22,6 +24,9 @@ export class User extends BaseEntity {
 
   @Column()
   salt: string;
+
+  @OneToMany((type) => Task, (task) => task.user)
+  tasks: Task[];
 
   @CreateDateColumn()
   dateTimeCreated: Date;
