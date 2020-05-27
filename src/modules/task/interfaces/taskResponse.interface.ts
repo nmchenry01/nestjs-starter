@@ -1,6 +1,6 @@
 import { TaskStatus } from '../enum/taskStatus.enum';
 
-export interface CreateTaskResponse {
+export interface TaskResponse {
   id: string;
   title: string;
   status: TaskStatus;

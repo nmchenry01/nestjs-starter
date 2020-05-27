@@ -3,27 +3,32 @@ import { Task } from '../models/task.entity';
 import { CreateTaskDTO } from '../dto/createTask.dto';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
 import { User } from '../../auth/models/user.entity';
-import { CreateTaskResponse } from '../interfaces/createTaskResponse.interface';
+import { TaskResponse } from '../interfaces/taskResponse.interface';
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
   async createTask(
     user: User,
     createTaskDTO: CreateTaskDTO,
-  ): Promise<CreateTaskResponse> {
+  ): Promise<TaskResponse> {
     const partialTask = this.create(createTaskDTO);
 
     partialTask.user = user;
 
     const task = await this.save(partialTask);
 
-    return this.buildCreateTaskResponse(task);
+    return this.buildTaskResponse(task);
   }
 
-  async getTasks(filterTaskDTO: FilterTaskDTO): Promise<Task[]> {
+  async getTasks(
+    user: User,
+    filterTaskDTO: FilterTaskDTO,
+  ): Promise<TaskResponse[]> {
     const { status, searchTerm } = filterTaskDTO;
 
     const query = this.createQueryBuilder('task');
+
+    query.where('task.userId = :userId', { userId: user.id });
 
     if (status) {
       query.andWhere('task.status = :status', { status });
@@ -39,7 +44,7 @@ export class TaskRepository extends Repository<Task> {
     return query.getMany();
   }
 
-  private buildCreateTaskResponse(task: Task): CreateTaskResponse {
+  buildTaskResponse(task: Task): TaskResponse {
     const {
       id,
       status,
