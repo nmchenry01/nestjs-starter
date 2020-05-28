@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTaskDTO } from './dto/createTask.dto';
 import { Task } from './models/task.entity';
@@ -7,9 +7,12 @@ import { FilterTaskDTO } from './dto/filterTask.dto';
 import { TaskRepository } from './repository/task.repository';
 import { User } from '../auth/models/user.entity';
 import { TaskResponse } from './interfaces/taskResponse.interface';
+import { LoggerContext } from '../../enum/loggerContext.enum';
 
 @Injectable()
 export class TaskService {
+  private logger = new Logger(LoggerContext.TASKSERVICE);
+
   constructor(@InjectRepository(Task) private taskRepository: TaskRepository) {}
 
   async getTasks(
@@ -22,7 +25,10 @@ export class TaskService {
   async getTaskById(user: User, id: string): Promise<TaskResponse> {
     const task = await this.taskRepository.findOne({ where: { id, user } });
 
-    if (!task) return undefined;
+    if (!task) {
+      this.logger.log(`Task with ID ${id} not found`);
+      return undefined;
+    }
 
     return this.taskRepository.buildTaskResponse(task);
   }
@@ -37,7 +43,16 @@ export class TaskService {
   async deleteTaskById(user: User, id: string): Promise<boolean> {
     const result = await this.taskRepository.delete({ id, userId: user.id });
 
-    if (result.affected === 1) return true;
+    if (result && result.affected === 1) return true;
+
+    if (result && result.affected !== 1)
+      this.logger.warn(
+        `Unexpected number of rows affected by delete operation: ${JSON.stringify(
+          result,
+        )}`,
+      );
+
+    this.logger.log(`Task to delete with ID ${id} not found`);
 
     return false;
   }
@@ -53,7 +68,16 @@ export class TaskService {
 
     const result = await this.taskRepository.update(id, updateTaskDTO);
 
-    if (result.affected === 1) return true;
+    if (result && result.affected === 1) return true;
+
+    if (result && result.affected !== 1)
+      this.logger.warn(
+        `Unexpected number of rows affected by update operation: ${JSON.stringify(
+          result,
+        )}`,
+      );
+
+    this.logger.log(`Task to update with ID ${id} not found`);
 
     return false;
   }
