@@ -9,19 +9,13 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: 'postgres' as 'postgres',
-      host: this.configService.get<string>('DATABASE_HOST', 'localhost'),
-      port: this.configService.get<number>('DATABASE_PORT', 5432),
-      username: this.configService.get<string>('DATABASE_USERNAME', 'admin'),
-      password: this.configService.get<string>('DATABASE_PASSWORD', 'password'),
-      database: this.configService.get<string>(
-        'DATABASE_NAME',
-        'nestjs-starter',
-      ),
+      host: this.configService.get<string>('database.host'),
+      port: this.configService.get<number>('database.port'),
+      username: this.configService.get<string>('database.username'),
+      password: this.configService.get<string>('database.password'),
+      database: this.configService.get<string>('database.host'),
       entities: [`${__dirname}/../**/*.entity.{js,ts}`],
-      synchronize: this.configService.get<boolean>(
-        'DATABASE_SYNCHRONIZE',
-        false,
-      ),
+      synchronize: this.configService.get<boolean>('database.synchronize'),
     };
   }
 }
