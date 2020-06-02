@@ -5,15 +5,19 @@ import {
   InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
+  Logger,
 } from '@nestjs/common';
 import { User } from '../models/user.entity';
 import { CreateUserDTO } from '../dto/createUser.dto';
 import { CreateUserResponse } from '../interfaces/createUserResponse.interface';
 import { SignInUserDTO } from '../dto/signInUser.dto';
 import { JwtPayload } from '../interfaces/jwtPayload.interface';
+import { LoggerContext } from '../../../enum/loggerContext.enum';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
+  private logger = new Logger(LoggerContext.USERREPOSITORY);
+
   async createUser(createUserDTO: CreateUserDTO): Promise<CreateUserResponse> {
     const { username, password } = createUserDTO;
 
@@ -28,6 +32,8 @@ export class UserRepository extends Repository<User> {
     try {
       const user = await partialUser.save();
 
+      this.logger.log(`User with username ${username} created`);
+
       return {
         id: user.id,
         username: user.username,
@@ -35,10 +41,13 @@ export class UserRepository extends Repository<User> {
       };
     } catch (error) {
       if (error.code === '23505') {
-        throw new ConflictException(
-          `User with username ${username} already exists`,
-        );
+        const errorMessage = `User with username ${username} already exists`;
+        this.logger.error(errorMessage);
+        throw new ConflictException(errorMessage);
       } else {
+        this.logger.error(
+          `Failed to created user with username ${username}: ${error.stack}`,
+        );
         throw new InternalServerErrorException();
       }
     }
@@ -50,15 +59,17 @@ export class UserRepository extends Repository<User> {
     const user = await this.findOne({ username });
 
     if (!user) {
-      throw new NotFoundException(
-        `User with username ${username} does not exist`,
-      );
+      const errorMessage = `User with username ${username} does not exist`;
+      this.logger.error(errorMessage);
+      throw new NotFoundException(errorMessage);
     }
 
     const comparePasswordResult = await this.validatePassword(password, user);
 
     if (!comparePasswordResult) {
-      throw new UnauthorizedException(`Passwords do not match`);
+      const errorMessage = `Passwords do not match`;
+      this.logger.error(errorMessage);
+      throw new UnauthorizedException(errorMessage);
     }
 
     return { username: user.username };

@@ -21,10 +21,13 @@ export class TaskRepository extends Repository<Task> {
 
     try {
       const task = await this.save(partialTask);
+
+      this.logger.verbose(`Successfully created task with ID: ${task.id}`);
+
       return this.buildTaskResponse(task);
     } catch (error) {
       this.logger.error(
-        `Failed to save task to DB: ${error.message} : ${JSON.stringify(
+        `Failed to save task to DB: ${error.stack} : ${JSON.stringify(
           createTaskDTO,
         )}`,
       );

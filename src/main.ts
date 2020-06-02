@@ -6,6 +6,7 @@ import { LoggerContext } from './enum/loggerContext.enum';
 async function bootstrap(): Promise<void> {
   const logger = new Logger(LoggerContext.BOOTSTRAP);
 
+  // TODO: Add logging level configuration from env/config vars
   const app = await NestFactory.create(AppModule);
 
   await app.listen(3000);

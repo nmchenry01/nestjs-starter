@@ -3,4 +3,6 @@ export enum LoggerContext {
   'TASKCONTROLLER' = 'TaskController',
   'TASKSERVICE' = 'TaskService',
   'TASKREPOSITORY' = 'TaskRepository',
+  'AUTHCONTROLLER' = 'AuthController',
+  'USERREPOSITORY' = 'UserRepository',
 }
