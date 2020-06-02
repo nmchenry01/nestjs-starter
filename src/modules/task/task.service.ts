@@ -7,7 +7,7 @@ import { FilterTaskDTO } from './dto/filterTask.dto';
 import { TaskRepository } from './repository/task.repository';
 import { User } from '../auth/models/user.entity';
 import { TaskResponse } from './interfaces/taskResponse.interface';
-import { LoggerContext } from '../../enum/loggerContext.enum';
+import { LoggerContext } from '../../enums/loggerContext.enum';
 
 @Injectable()
 export class TaskService {

@@ -5,7 +5,7 @@ import { CreateTaskDTO } from '../dto/createTask.dto';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
 import { User } from '../../auth/models/user.entity';
 import { TaskResponse } from '../interfaces/taskResponse.interface';
-import { LoggerContext } from '../../../enum/loggerContext.enum';
+import { LoggerContext } from '../../../enums/loggerContext.enum';
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {

@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString, IsIn } from 'class-validator';
-import { TaskStatus } from '../enum/taskStatus.enum';
+import { TaskStatus } from '../enums/taskStatus.enum';
 
 export class CreateTaskDTO {
   @IsNotEmpty()

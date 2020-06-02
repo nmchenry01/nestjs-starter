@@ -12,7 +12,7 @@ import { CreateUserDTO } from '../dto/createUser.dto';
 import { CreateUserResponse } from '../interfaces/createUserResponse.interface';
 import { SignInUserDTO } from '../dto/signInUser.dto';
 import { JwtPayload } from '../interfaces/jwtPayload.interface';
-import { LoggerContext } from '../../../enum/loggerContext.enum';
+import { LoggerContext } from '../../../enums/loggerContext.enum';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {

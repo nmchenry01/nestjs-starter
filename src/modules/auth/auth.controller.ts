@@ -5,7 +5,7 @@ import { CreateUserDTO } from './dto/createUser.dto';
 import { CreateUserResponse } from './interfaces/createUserResponse.interface';
 import { SignInUserDTO } from './dto/signInUser.dto';
 import { AccessToken } from './interfaces/accessToken.interface';
-import { LoggerContext } from '../../enum/loggerContext.enum';
+import { LoggerContext } from '../../enums/loggerContext.enum';
 
 @Controller('auth')
 export class AuthController {

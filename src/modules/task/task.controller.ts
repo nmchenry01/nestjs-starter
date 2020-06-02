@@ -21,7 +21,7 @@ import { FilterTaskDTO } from './dto/filterTask.dto';
 import { GetUser } from '../auth/decorators/getUser.decorator';
 import { User } from '../auth/models/user.entity';
 import { TaskResponse } from './interfaces/taskResponse.interface';
-import { LoggerContext } from '../../enum/loggerContext.enum';
+import { LoggerContext } from '../../enums/loggerContext.enum';
 
 @Controller('task')
 @UseGuards(AuthGuard())

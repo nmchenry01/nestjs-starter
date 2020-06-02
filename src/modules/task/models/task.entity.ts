@@ -17,7 +17,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { TaskStatus } from '../enum/taskStatus.enum';
+import { TaskStatus } from '../enums/taskStatus.enum';
 import { User } from '../../auth/models/user.entity';
 
 @Entity()
