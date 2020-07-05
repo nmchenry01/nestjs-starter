@@ -24,7 +24,7 @@ import { TaskResponse } from './interfaces/taskResponse.interface';
 import { LoggerContext } from '../../enums/loggerContext.enum';
 
 @Controller('task')
-@UseGuards(AuthGuard())
+@UseGuards(AuthGuard('jwt'))
 export class TaskController {
   private logger = new Logger(LoggerContext.TASKCONTROLLER);
 
