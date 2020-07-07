@@ -8,9 +8,10 @@ import { TaskRepository } from './repository/task.repository';
 import { User } from '../auth/models/user.entity';
 import { TaskResponse } from './interfaces/taskResponse.interface';
 import { LoggerContext } from '../../enums/loggerContext.enum';
+import { ITaskService } from './interfaces/taskService.interface';
 
 @Injectable()
-export class TaskService {
+export class TaskService implements ITaskService {
   private logger = new Logger(LoggerContext.TASKSERVICE);
 
   constructor(@InjectRepository(Task) private taskRepository: TaskRepository) {}
