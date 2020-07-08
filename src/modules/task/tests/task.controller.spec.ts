@@ -9,16 +9,45 @@ import { mockGuard } from './mocks/authGuard.mock';
 import { User } from '../../auth/models/user.entity';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
 import { TaskResponse } from '../interfaces/taskResponse.interface';
-import { Task } from '../models/task.entity';
 import { TaskStatus } from '../enums/taskStatus.enum';
 import { CreateTaskDTO } from '../dto/createTask.dto';
+import { UpdateTaskDTO } from '../dto/updateTask.dto';
 
 describe('Todo Controller', () => {
   let taskController: TaskController;
   let taskService: TaskService;
   let logger: Logger;
+  let mockUser: User;
+  let mockTaskId: string;
+  let mockFilterTaskDTO: FilterTaskDTO;
+  let mockTaskResponse: TaskResponse;
+  let mockCreateTaskDTO: CreateTaskDTO;
+  let mockUpdateTaskDTO: UpdateTaskDTO;
 
   beforeEach(async () => {
+    mockUser = new User();
+    mockTaskId = '123';
+    mockFilterTaskDTO = {
+      searchTerm: 'test',
+    };
+    mockTaskResponse = {
+      id: '123',
+      title: 'mockTitle',
+      status: TaskStatus.IN_PROGRESS,
+      description: 'mockDescription',
+      userId: 'mockUserId',
+      dateTimeCreated: new Date('10-10-2000'),
+      dateTimeModified: new Date('10-10-2000'),
+    };
+    mockCreateTaskDTO = {
+      title: 'mockTask',
+      description: 'mockDescription',
+      status: TaskStatus.OPEN,
+    };
+    mockUpdateTaskDTO = {
+      title: 'someTitle',
+    };
+
     const mockLogger = new Logger();
     mockLogger.debug = jest.fn();
     mockLogger.error = jest.fn();
@@ -50,12 +79,6 @@ describe('Todo Controller', () => {
 
   describe('getTasks', () => {
     it('should call logger.verbose and taskService.getTasks with correct inputs', async () => {
-      const mockUser = new User();
-
-      const mockFilterTaskDTO: FilterTaskDTO = {
-        searchTerm: 'test',
-      };
-
       taskService.getTasks = jest.fn();
 
       await taskController.getTasks(mockUser, mockFilterTaskDTO);
@@ -70,62 +93,29 @@ describe('Todo Controller', () => {
 
   describe('getTask', () => {
     it('should call logger.verbose and taskService.getTaskById with correct inputs', async () => {
-      const mockUser = new User();
-
-      const mockId = '123';
-
-      const mockTaskResponse: TaskResponse = {
-        id: '123',
-        title: 'mockTitle',
-        status: TaskStatus.IN_PROGRESS,
-        description: 'mockDescription',
-        userId: 'mockUserId',
-        dateTimeCreated: new Date('10-10-2000'),
-        dateTimeModified: new Date('10-10-2000'),
-      };
-
       taskService.getTaskById = jest.fn().mockResolvedValue(mockTaskResponse);
 
-      const response = await taskController.getTask(mockUser, mockId);
+      const response = await taskController.getTask(mockUser, mockTaskId);
 
       expect(logger.verbose).toHaveBeenCalledTimes(1);
-      expect(taskService.getTaskById).toHaveBeenCalledWith(mockUser, mockId);
+      expect(taskService.getTaskById).toHaveBeenCalledWith(
+        mockUser,
+        mockTaskId,
+      );
       expect(response).toEqual(mockTaskResponse);
     });
 
     it('should throw a NotFoundExeception when a task is not found', async () => {
-      const mockUser = new User();
-
-      const mockId = '123';
-
       taskService.getTaskById = jest.fn().mockResolvedValue(undefined);
 
       await expect(() =>
-        taskController.getTask(mockUser, mockId),
-      ).rejects.toThrowError(`Task with ID ${mockId} not found`);
+        taskController.getTask(mockUser, mockTaskId),
+      ).rejects.toThrowError(`Task with ID ${mockTaskId} not found`);
     });
   });
 
   describe('createTask', () => {
     it('should call logger.verbose and taskService.createTask with correct inputs', async () => {
-      const mockUser = new User();
-
-      const mockCreateTaskDTO: CreateTaskDTO = {
-        title: 'mockTask',
-        description: 'mockDescription',
-        status: TaskStatus.OPEN,
-      };
-
-      const mockTaskResponse: TaskResponse = {
-        id: '123',
-        title: 'mockTask',
-        status: TaskStatus.OPEN,
-        description: 'mockDescription',
-        userId: 'mockUserId',
-        dateTimeCreated: new Date('10-10-2000'),
-        dateTimeModified: new Date('10-10-2000'),
-      };
-
       taskService.createTask = jest.fn().mockResolvedValue(mockTaskResponse);
 
       const response = await taskController.createTask(
@@ -139,6 +129,51 @@ describe('Todo Controller', () => {
         mockCreateTaskDTO,
       );
       expect(response).toEqual(mockTaskResponse);
+    });
+  });
+
+  describe('deleteTask', () => {
+    it('should call logger.verbose and taskService.deleteTaskById with correct inputs', async () => {
+      taskService.deleteTaskById = jest.fn().mockResolvedValue(true);
+
+      await taskController.deleteTask(mockUser, mockTaskId);
+
+      expect(logger.verbose).toHaveBeenCalledTimes(1);
+      expect(taskService.deleteTaskById).toHaveBeenCalledWith(
+        mockUser,
+        mockTaskId,
+      );
+    });
+
+    it('should throw a NotFoundException when the task to delete is not found', async () => {
+      taskService.deleteTaskById = jest.fn().mockResolvedValue(false);
+
+      await expect(() =>
+        taskController.deleteTask(mockUser, mockTaskId),
+      ).rejects.toThrowError(`Task to delete with ID ${mockTaskId} not found`);
+    });
+  });
+
+  describe('updateTask', () => {
+    it('should call logger.verbose and taskService.updateTask with correct inputs', async () => {
+      taskService.updateTask = jest.fn().mockResolvedValue(true);
+
+      await taskController.updateTask(mockTaskId, mockUser, mockUpdateTaskDTO);
+
+      expect(logger.verbose).toHaveBeenCalledTimes(1);
+      expect(taskService.updateTask).toHaveBeenCalledWith(
+        mockTaskId,
+        mockUser,
+        mockUpdateTaskDTO,
+      );
+    });
+
+    it('should throw a NotFoundException when the task to updated is not found', async () => {
+      taskService.updateTask = jest.fn().mockResolvedValue(undefined);
+
+      await expect(() =>
+        taskController.updateTask(mockTaskId, mockUser, mockUpdateTaskDTO),
+      ).rejects.toThrowError(`Task to update with ID ${mockTaskId} not found`);
     });
   });
 });
