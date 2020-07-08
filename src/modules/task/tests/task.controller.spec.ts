@@ -17,6 +17,7 @@ describe('Todo Controller', () => {
   let taskController: TaskController;
   let taskService: TaskService;
   let logger: Logger;
+
   let mockUser: User;
   let mockTaskId: string;
   let mockFilterTaskDTO: FilterTaskDTO;

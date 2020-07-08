@@ -46,12 +46,14 @@ export class TaskService implements ITaskService {
 
     if (result && result.affected === 1) return true;
 
-    if (result && result.affected !== 1)
+    if (result && result.affected !== 1) {
       this.logger.warn(
         `Unexpected number of rows affected by delete operation: ${JSON.stringify(
           result,
         )}`,
       );
+      return false;
+    }
 
     this.logger.log(`Task to delete with ID ${id} not found`);
 
