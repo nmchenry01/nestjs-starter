@@ -18,7 +18,7 @@ export class AuthController {
     @Body(ValidationPipe) createUserDTO: CreateUserDTO,
   ): Promise<CreateUserResponse> {
     this.logger.verbose(
-      `Create User request recieved: ${JSON.stringify(createUserDTO)}`,
+      `Create User request received: ${JSON.stringify(createUserDTO)}`,
     );
 
     return this.authService.createUser(createUserDTO);
@@ -29,7 +29,7 @@ export class AuthController {
     @Body(ValidationPipe) signInUserDTO: SignInUserDTO,
   ): Promise<AccessToken> {
     this.logger.verbose(
-      `Sign In request recieved: ${JSON.stringify(signInUserDTO)}`,
+      `Sign In request received: ${JSON.stringify(signInUserDTO)}`,
     );
 
     return this.authService.signInUser(signInUserDTO);
