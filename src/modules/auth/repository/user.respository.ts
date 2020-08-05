@@ -5,18 +5,18 @@ import {
   InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
-  Logger,
 } from '@nestjs/common';
 import { User } from '../models/user.entity';
 import { CreateUserDTO } from '../dto/createUser.dto';
 import { CreateUserResponse } from '../interfaces/createUserResponse.interface';
 import { SignInUserDTO } from '../dto/signInUser.dto';
 import { JwtPayload } from '../interfaces/jwtPayload.interface';
-import { LoggerContext } from '../../../enums/loggerContext.enum';
+import { LoggerContext } from '../../logger/enums/loggerContext.enum';
+import { LoggerService } from '../../logger/logger.service';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  private logger = new Logger(LoggerContext.USERREPOSITORY);
+  private loggerService = new LoggerService(LoggerContext.USERREPOSITORY);
 
   async createUser(createUserDTO: CreateUserDTO): Promise<CreateUserResponse> {
     const { username, password } = createUserDTO;
@@ -32,7 +32,7 @@ export class UserRepository extends Repository<User> {
     try {
       const user = await partialUser.save();
 
-      this.logger.log(`User with username ${username} created`);
+      this.loggerService.log(`User with username ${username} created`);
 
       return {
         id: user.id,
@@ -42,10 +42,10 @@ export class UserRepository extends Repository<User> {
     } catch (error) {
       if (error.code === '23505') {
         const errorMessage = `User with username ${username} already exists`;
-        this.logger.error(errorMessage);
+        this.loggerService.error(errorMessage);
         throw new ConflictException(errorMessage);
       } else {
-        this.logger.error(
+        this.loggerService.error(
           `Failed to created user with username ${username}: ${error.stack}`,
         );
         throw new InternalServerErrorException();
@@ -60,7 +60,7 @@ export class UserRepository extends Repository<User> {
 
     if (!user) {
       const errorMessage = `User with username ${username} does not exist`;
-      this.logger.error(errorMessage);
+      this.loggerService.error(errorMessage);
       throw new NotFoundException(errorMessage);
     }
 
@@ -68,7 +68,7 @@ export class UserRepository extends Repository<User> {
 
     if (!comparePasswordResult) {
       const errorMessage = `Passwords do not match`;
-      this.logger.error(errorMessage);
+      this.loggerService.error(errorMessage);
       throw new UnauthorizedException(errorMessage);
     }
 

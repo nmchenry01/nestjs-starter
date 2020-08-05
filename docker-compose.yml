@@ -12,24 +12,24 @@ services:
       POSTGRES_DB: nestjs-starter
     volumes:
       - ./.postgres:/var/lib/postgresql/data
-  nestjs-starter:
-    build: .
-    container_name: nestjs-starter
-    ports:
-      - 3000:3000
-    depends_on:
-      - postgres
-    volumes:
-      - ./src:/app/src
-    command:
-      [
-        './scripts/wait-for-it.sh',
-        'postgres:5432',
-        '--',
-        'npm',
-        'run',
-        'start:dev',
-      ]
+  # nestjs-starter:
+  #   build: .
+  #   container_name: nestjs-starter
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - postgres
+  #   volumes:
+  #     - ./src:/app/src
+  #   command:
+  #     [
+  #       './scripts/wait-for-it.sh',
+  #       'postgres:5432',
+  #       '--',
+  #       'npm',
+  #       'run',
+  #       'start:dev',
+  #     ]
   adminer:
     image: adminer
     restart: always

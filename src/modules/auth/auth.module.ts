@@ -7,6 +7,7 @@ import { AuthController } from './auth.controller';
 import { UserRepository } from './repository/user.respository';
 import { JwtConfigService } from '../../config/jwt.config';
 import { JwtStrategy } from './jwt.strategy';
+import { LoggerModule } from '../logger/logger.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { JwtStrategy } from './jwt.strategy';
     JwtModule.registerAsync({
       useClass: JwtConfigService,
     }),
+    LoggerModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

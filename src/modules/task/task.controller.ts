@@ -11,7 +11,6 @@ import {
   ValidationPipe,
   Query,
   UseGuards,
-  Logger,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateTaskDTO } from './dto/createTask.dto';
@@ -21,14 +20,18 @@ import { FilterTaskDTO } from './dto/filterTask.dto';
 import { GetUser } from '../auth/decorators/getUser.decorator';
 import { User } from '../auth/models/user.entity';
 import { TaskResponse } from './interfaces/taskResponse.interface';
-import { LoggerContext } from '../../enums/loggerContext.enum';
+import { LoggerContext } from '../logger/enums/loggerContext.enum';
+import { LoggerService } from '../logger/logger.service';
 
 @Controller('task')
 @UseGuards(AuthGuard('jwt'))
 export class TaskController {
-  private logger = new Logger(LoggerContext.TASKCONTROLLER);
-
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private loggerService: LoggerService,
+  ) {
+    this.loggerService.setContext(LoggerContext.TASKCONTROLLER);
+  }
 
   @Get()
   @UsePipes(ValidationPipe)
@@ -36,7 +39,7 @@ export class TaskController {
     @GetUser() user: User,
     @Query() filterTaskDTO: FilterTaskDTO,
   ): Promise<TaskResponse[]> {
-    this.logger.verbose(
+    this.loggerService.verbose(
       `Get Tasks request received from ${user.username}: ${JSON.stringify(
         filterTaskDTO,
       )}`,
@@ -49,7 +52,7 @@ export class TaskController {
     @GetUser() user: User,
     @Param('id') id: string,
   ): Promise<TaskResponse> {
-    this.logger.verbose(
+    this.loggerService.verbose(
       `Get Task By ID request received from ${user.username}: Task ID ${id}`,
     );
 
@@ -66,7 +69,7 @@ export class TaskController {
     @GetUser() user: User,
     @Body() createTaskDTO: CreateTaskDTO,
   ): Promise<TaskResponse> {
-    this.logger.verbose(
+    this.loggerService.verbose(
       `Create Task request received from ${user.username}: ${JSON.stringify(
         createTaskDTO,
       )}`,
@@ -80,7 +83,7 @@ export class TaskController {
     @GetUser() user: User,
     @Param('id') id: string,
   ): Promise<void> {
-    this.logger.verbose(
+    this.loggerService.verbose(
       `Delete Task request from ${user.username}: Task ID ${id}`,
     );
 
@@ -98,7 +101,7 @@ export class TaskController {
     @GetUser() user: User,
     @Body() updateTaskDTO: UpdateTaskDTO,
   ): Promise<void> {
-    this.logger.verbose(
+    this.loggerService.verbose(
       `Update Task request from ${
         user.username
       }: Task ID ${id} ${JSON.stringify(updateTaskDTO)}`,

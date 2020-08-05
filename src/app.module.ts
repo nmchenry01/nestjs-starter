@@ -5,6 +5,7 @@ import { TaskModule } from './modules/task/task.module';
 import { TypeOrmConfigService } from './config/typeorm.config';
 import { AuthModule } from './modules/auth/auth.module';
 import configuration from './config/configuration';
+import { LoggerModule } from './modules/logger/logger.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import configuration from './config/configuration';
     }),
     TaskModule,
     AuthModule,
+    LoggerModule,
   ],
 })
 export class AppModule {}

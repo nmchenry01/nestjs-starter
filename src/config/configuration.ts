@@ -1,5 +1,5 @@
 import { Configuration } from '../interfaces/configuration.interface';
-import { LogLevels } from '../enums/loggerLevels.enum';
+import { LogLevels } from '../modules/logger/enums/loggerLevels.enum';
 
 export default (): Configuration =>
   ({

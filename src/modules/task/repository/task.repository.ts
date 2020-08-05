@@ -1,15 +1,16 @@
 import { Repository, EntityRepository } from 'typeorm';
-import { Logger, InternalServerErrorException } from '@nestjs/common';
+import { InternalServerErrorException } from '@nestjs/common';
 import { Task } from '../models/task.entity';
 import { CreateTaskDTO } from '../dto/createTask.dto';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
 import { User } from '../../auth/models/user.entity';
 import { TaskResponse } from '../interfaces/taskResponse.interface';
-import { LoggerContext } from '../../../enums/loggerContext.enum';
+import { LoggerContext } from '../../logger/enums/loggerContext.enum';
+import { LoggerService } from '../../logger/logger.service';
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
-  private logger = new Logger(LoggerContext.TASKREPOSITORY);
+  private loggerService = new LoggerService(LoggerContext.TASKREPOSITORY);
 
   async createTask(
     user: User,
@@ -22,11 +23,13 @@ export class TaskRepository extends Repository<Task> {
     try {
       const task = await this.save(partialTask);
 
-      this.logger.verbose(`Successfully created task with ID: ${task.id}`);
+      this.loggerService.verbose(
+        `Successfully created task with ID: ${task.id}`,
+      );
 
       return this.buildTaskResponse(task);
     } catch (error) {
-      this.logger.error(
+      this.loggerService.error(
         `Failed to save task to DB: ${error.stack} : ${JSON.stringify(
           createTaskDTO,
         )}`,

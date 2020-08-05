@@ -1,23 +1,27 @@
-import { Controller, Post, Body, ValidationPipe, Logger } from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from './dto/createUser.dto';
 import { CreateUserResponse } from './interfaces/createUserResponse.interface';
 import { SignInUserDTO } from './dto/signInUser.dto';
 import { AccessToken } from './interfaces/accessToken.interface';
-import { LoggerContext } from '../../enums/loggerContext.enum';
+import { LoggerContext } from '../logger/enums/loggerContext.enum';
+import { LoggerService } from '../logger/logger.service';
 
 @Controller('auth')
 export class AuthController {
-  private logger = new Logger(LoggerContext.AUTHCONTROLLER);
-
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private loggerService: LoggerService,
+  ) {
+    this.loggerService.setContext(LoggerContext.AUTHCONTROLLER);
+  }
 
   @Post('/signup')
   async signup(
     @Body(ValidationPipe) createUserDTO: CreateUserDTO,
   ): Promise<CreateUserResponse> {
-    this.logger.verbose(
+    this.loggerService.verbose(
       `Create User request received: ${JSON.stringify(createUserDTO)}`,
     );
 
@@ -28,7 +32,7 @@ export class AuthController {
   async signin(
     @Body(ValidationPipe) signInUserDTO: SignInUserDTO,
   ): Promise<AccessToken> {
-    this.logger.verbose(
+    this.loggerService.verbose(
       `Sign In request received: ${JSON.stringify(signInUserDTO)}`,
     );
 

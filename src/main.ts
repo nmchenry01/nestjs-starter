@@ -1,22 +1,27 @@
 import { NestFactory } from '@nestjs/core';
-import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+
 import { AppModule } from './app.module';
-import { LoggerContext } from './enums/loggerContext.enum';
+import { LoggerContext } from './modules/logger/enums/loggerContext.enum';
+import { LoggerService } from './modules/logger/logger.service';
 
 const APP_NAME = process.env.npm_package_name;
 const APP_VERSION = process.env.npm_package_version;
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: new LoggerService(),
+  });
 
-  const logger = new Logger(LoggerContext.BOOTSTRAP);
+  const loggerService = await app.resolve(LoggerService);
+  loggerService.setContext(LoggerContext.BOOTSTRAP);
+
   const configService = app.get(ConfigService);
 
   const port = configService.get('server.port');
   await app.listen(port);
 
-  logger.log(`${APP_NAME} version ${APP_VERSION} running on ${port}`);
+  loggerService.log(`${APP_NAME} version ${APP_VERSION} running on ${port}`);
 }
 
 bootstrap().catch((error) => {
