@@ -6,7 +6,7 @@ import { UpdateTaskDTO } from './dto/updateTask.dto';
 import { FilterTaskDTO } from './dto/filterTask.dto';
 import { TaskRepository } from './repository/task.repository';
 import { User } from '../auth/models/user.entity';
-import { TaskResponse } from './interfaces/taskResponse.interface';
+import { TaskResponse } from './dto/taskResponse.dto';
 import { LoggerContext } from '../logger/enums/loggerContext.enum';
 import { ITaskService } from './interfaces/taskService.interface';
 import { LoggerService } from '../logger/logger.service';

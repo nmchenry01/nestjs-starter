@@ -3,7 +3,7 @@ import { User } from '../../../auth/models/user.entity';
 import { FilterTaskDTO } from '../../dto/filterTask.dto';
 import { CreateTaskDTO } from '../../dto/createTask.dto';
 import { UpdateTaskDTO } from '../../dto/updateTask.dto';
-import { TaskResponse } from '../../interfaces/taskResponse.interface';
+import { TaskResponse } from '../../dto/taskResponse.dto';
 import { TaskStatus } from '../../enums/taskStatus.enum';
 
 export class TaskServiceMock implements ITaskService {

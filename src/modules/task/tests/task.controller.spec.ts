@@ -8,7 +8,7 @@ import { TaskService } from '../task.service';
 import { mockGuard } from './mocks/authGuard.mock';
 import { User } from '../../auth/models/user.entity';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
-import { TaskResponse } from '../interfaces/taskResponse.interface';
+import { TaskResponse } from '../dto/taskResponse.dto';
 import { TaskStatus } from '../enums/taskStatus.enum';
 import { CreateTaskDTO } from '../dto/createTask.dto';
 import { UpdateTaskDTO } from '../dto/updateTask.dto';

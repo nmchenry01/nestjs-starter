@@ -4,7 +4,7 @@ import { Task } from '../models/task.entity';
 import { CreateTaskDTO } from '../dto/createTask.dto';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
 import { User } from '../../auth/models/user.entity';
-import { TaskResponse } from '../interfaces/taskResponse.interface';
+import { TaskResponse } from '../dto/taskResponse.dto';
 import { LoggerContext } from '../../logger/enums/loggerContext.enum';
 import { LoggerService } from '../../logger/logger.service';
 

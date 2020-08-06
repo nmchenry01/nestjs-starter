@@ -1,4 +1,4 @@
-import { TaskResponse } from './taskResponse.interface';
+import { TaskResponse } from '../dto/taskResponse.dto';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
 import { User } from '../../auth/models/user.entity';
 import { CreateTaskDTO } from '../dto/createTask.dto';

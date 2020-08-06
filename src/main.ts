@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { LoggerContext } from './modules/logger/enums/loggerContext.enum';
 import { LoggerService } from './modules/logger/logger.service';
@@ -17,6 +18,15 @@ async function bootstrap(): Promise<void> {
   loggerService.setContext(LoggerContext.BOOTSTRAP);
 
   const configService = app.get(ConfigService);
+
+  const options = new DocumentBuilder()
+    .setTitle(APP_NAME)
+    .setDescription(`The ${APP_NAME} API description`)
+    .setVersion(APP_VERSION)
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
 
   const port = configService.get('server.port');
   await app.listen(port);

@@ -4,7 +4,7 @@ import { TaskService } from '../task.service';
 import { TaskRepository } from '../repository/task.repository';
 import { UpdateTaskDTO } from '../dto/updateTask.dto';
 import { CreateTaskDTO } from '../dto/createTask.dto';
-import { TaskResponse } from '../interfaces/taskResponse.interface';
+import { TaskResponse } from '../dto/taskResponse.dto';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
 import { User } from '../../auth/models/user.entity';
 import { TaskStatus } from '../enums/taskStatus.enum';
