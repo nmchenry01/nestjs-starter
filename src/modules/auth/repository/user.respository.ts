@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { User } from '../models/user.entity';
 import { CreateUserDTO } from '../dto/createUser.dto';
-import { CreateUserResponse } from '../interfaces/createUserResponse.interface';
+import { CreateUserResponse } from '../dto/createUserResponse.dto';
 import { SignInUserDTO } from '../dto/signInUser.dto';
 import { JwtPayload } from '../interfaces/jwtPayload.interface';
 import { LoggerContext } from '../../logger/enums/loggerContext.enum';

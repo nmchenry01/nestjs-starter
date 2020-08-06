@@ -21,7 +21,7 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiCreatedResponse,
-  ApiNoContentResponse,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { CreateTaskDTO } from './dto/createTask.dto';
 import { TaskService } from './task.service';
@@ -54,6 +54,9 @@ export class TaskController {
     description: 'Retrieved list of active tasks successfully',
     type: [TaskResponse],
   })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized',
+  })
   @ApiInternalServerErrorResponse({
     description: 'Internal server error',
   })
@@ -77,6 +80,9 @@ export class TaskController {
   })
   @ApiNotFoundResponse({
     description: 'Task with ID not found',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized',
   })
   @ApiOkResponse({
     description: 'Retrieved task successfully',
@@ -109,6 +115,9 @@ export class TaskController {
     description: 'Task created successfully',
     type: TaskResponse,
   })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized',
+  })
   @ApiInternalServerErrorResponse({
     description: 'Internal server error',
   })
@@ -133,6 +142,9 @@ export class TaskController {
   })
   @ApiOkResponse({
     description: 'Task deleted successfully',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized',
   })
   @ApiNotFoundResponse({
     description: 'Task to delete with ID not found',
@@ -162,6 +174,9 @@ export class TaskController {
   })
   @ApiOkResponse({
     description: 'Task updated successfully',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized',
   })
   @ApiNotFoundResponse({
     description: 'Task to update with ID not found',
