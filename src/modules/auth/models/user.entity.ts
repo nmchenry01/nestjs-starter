@@ -25,7 +25,7 @@ export class User extends BaseEntity {
   @Column()
   salt: string;
 
-  @OneToMany((type) => Task, (task) => task.user)
+  @OneToMany(() => Task, (task) => task.user)
   tasks: Task[];
 
   @CreateDateColumn()
