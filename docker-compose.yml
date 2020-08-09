@@ -10,8 +10,7 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
       POSTGRES_DB: nestjs-starter
-    volumes:
-      - ./.postgres:/var/lib/postgresql/data
+
   nestjs-starter:
     build: .
     container_name: nestjs-starter
@@ -30,10 +29,9 @@ services:
         'run',
         'start:dev',
       ]
+
   adminer:
     image: adminer
     restart: always
     ports:
       - 9000:8080
-volumes:
-  my_data:
