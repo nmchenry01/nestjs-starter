@@ -12,6 +12,8 @@ import { TaskResponse } from '../dto/taskResponse.dto';
 import { TaskStatus } from '../enums/taskStatus.enum';
 import { CreateTaskDTO } from '../dto/createTask.dto';
 import { UpdateTaskDTO } from '../dto/updateTask.dto';
+import { LoggerService } from '../../logger/logger.service';
+import { LoggerServiceMock } from './mocks/loggerService.mock';
 
 describe('Todo Controller', () => {
   let taskController: TaskController;
@@ -60,6 +62,7 @@ describe('Todo Controller', () => {
       controllers: [TaskController],
       providers: [
         { provide: TaskService, useClass: TaskServiceMock },
+        { provide: LoggerService, useValue: mockLogger },
         TaskRepository,
       ],
     })

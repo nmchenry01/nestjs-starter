@@ -7,6 +7,7 @@ import { TaskResponse } from '../dto/taskResponse.dto';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
 import { User } from '../../auth/models/user.entity';
 import { TaskStatus } from '../enums/taskStatus.enum';
+import { LoggerService } from '../../logger/logger.service';
 
 describe('TodoService', () => {
   let taskService: TaskService;
@@ -48,7 +49,11 @@ describe('TodoService', () => {
     mockLogger.warn = jest.fn();
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [TaskService, TaskRepository],
+      providers: [
+        TaskService,
+        TaskRepository,
+        { provide: LoggerService, useValue: mockLogger },
+      ],
     }).compile();
 
     module.useLogger(mockLogger);
