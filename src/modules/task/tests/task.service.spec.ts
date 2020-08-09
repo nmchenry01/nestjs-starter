@@ -19,7 +19,6 @@ describe('TodoService', () => {
   let mockFilterTaskDTO: FilterTaskDTO;
   let mockTaskResponse: TaskResponse;
   let mockCreateTaskDTO: CreateTaskDTO;
-  let mockUpdateTaskDTO: UpdateTaskDTO;
 
   beforeEach(async () => {
     mockUser = new User();
