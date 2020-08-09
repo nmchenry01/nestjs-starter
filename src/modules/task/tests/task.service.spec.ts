@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Logger } from '@nestjs/common';
 import { TaskService } from '../task.service';
 import { TaskRepository } from '../repository/task.repository';
-import { UpdateTaskDTO } from '../dto/updateTask.dto';
 import { CreateTaskDTO } from '../dto/createTask.dto';
 import { TaskResponse } from '../dto/taskResponse.dto';
 import { FilterTaskDTO } from '../dto/filterTask.dto';
@@ -39,9 +38,6 @@ describe('TodoService', () => {
       title: 'mockTask',
       description: 'mockDescription',
       status: TaskStatus.OPEN,
-    };
-    mockUpdateTaskDTO = {
-      title: 'someTitle',
     };
 
     const mockLogger = new Logger();

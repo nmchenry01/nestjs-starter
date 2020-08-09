@@ -169,8 +169,8 @@ export class TaskController {
   }
 
   @ApiOperation({
-    summary: 'Delete a task',
-    description: 'Delete a task with a given ID',
+    summary: 'Update a task',
+    description: 'Update a task with a given ID',
   })
   @ApiOkResponse({
     description: 'Task updated successfully',

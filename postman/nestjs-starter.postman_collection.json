@@ -1,0 +1,1143 @@
+{
+	"info": {
+		"_postman_id": "939155f0-aac2-4bc0-9746-96dbbaed9c69",
+		"name": "nestjs-starter",
+		"description": "The nestjs-starter API description",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "task",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Get task by ID",
+							"request": {
+								"auth": {
+									"type": "bearer"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/task/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"task",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Fetches task by ID"
+							},
+							"response": [
+								{
+									"name": "Internal server error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Retrieved task successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"id\": \"eiusmod elit ad tempor\",\n \"title\": \"proident ea nostrud eu\",\n \"status\": \"IN_PROGRESS\",\n \"description\": \"in ea qui\",\n \"userId\": \"exercitation dolore sit esse commodo\",\n \"dateTimeCreated\": \"qui consectetur voluptate do culpa\",\n \"dateTimeModified\": \"quis voluptate in proide\"\n}"
+								},
+								{
+									"name": "Task with ID not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Update a task",
+							"request": {
+								"auth": {
+									"type": "bearer"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/task/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"task",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Delete a task with a given ID"
+							},
+							"response": [
+								{
+									"name": "Task to delete with ID not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Task deleted successfully",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Delete a task",
+							"request": {
+								"auth": {
+									"type": "bearer"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/task/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"task",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Delete a task with a given ID"
+							},
+							"response": [
+								{
+									"name": "Task updated successfully",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Task to update with ID not found",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{URL}}/task/:id",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"task",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get all tasks",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/task?searchTerm=<string>&status=<string>",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"task"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "<string>"
+								},
+								{
+									"key": "status",
+									"value": "<string>"
+								}
+							]
+						},
+						"description": "Fetches all tasks from the database for a given user. Optional filter query parameters"
+					},
+					"response": [
+						{
+							"name": "Internal server error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/task?searchTerm=<string>&status=<string>",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"task"
+									],
+									"query": [
+										{
+											"key": "searchTerm",
+											"value": "<string>"
+										},
+										{
+											"key": "status",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/task?searchTerm=<string>&status=<string>",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"task"
+									],
+									"query": [
+										{
+											"key": "searchTerm",
+											"value": "<string>"
+										},
+										{
+											"key": "status",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Retrieved list of active tasks successfully",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/task?searchTerm=<string>&status=<string>",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"task"
+									],
+									"query": [
+										{
+											"key": "searchTerm",
+											"value": "<string>"
+										},
+										{
+											"key": "status",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"id\": \"minim Ut\",\n  \"title\": \"sit exerci\",\n  \"status\": \"OPEN\",\n  \"description\": \"cillum sunt proident\",\n  \"userId\": \"Ut nisi do eiusmod dolore\",\n  \"dateTimeCreated\": \"elit dolor Ut\",\n  \"dateTimeModified\": \"deserunt\"\n },\n {\n  \"id\": \"aliquip ut sunt amet ullamco\",\n  \"title\": \"reprehenderit aliquip\",\n  \"status\": \"CLOSED\",\n  \"description\": \"consequat ad\",\n  \"userId\": \"proident exercitation culpa ullamco dolor\",\n  \"dateTimeCreated\": \"ut\",\n  \"dateTimeModified\": \"ullamco voluptate eiusmod\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create task",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/task",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"task"
+							]
+						},
+						"description": "Create a task with a body"
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/task",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Internal server error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/task",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Task created successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/task",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"eiusmod elit ad tempor\",\n \"title\": \"proident ea nostrud eu\",\n \"status\": \"IN_PROGRESS\",\n \"description\": \"in ea qui\",\n \"userId\": \"exercitation dolore sit esse commodo\",\n \"dateTimeCreated\": \"qui consectetur voluptate do culpa\",\n \"dateTimeModified\": \"quis voluptate in proide\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "User sign up",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/auth/signup",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						},
+						"description": "Sign up a new user with username and password"
+					},
+					"response": [
+						{
+							"name": "User credentials already exist",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/auth/signup",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "User signed up successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/auth/signup",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"Excepteur laborum\",\n \"username\": \"amet Lorem\",\n \"dateTimeCreated\": \"ex dolore voluptate in consectetur\"\n}"
+						},
+						{
+							"name": "Internal server error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/auth/signup",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "User sign in",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/auth/signin",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						},
+						"description": "Sign in an existing user with username and password"
+					},
+					"response": [
+						{
+							"name": "User not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/auth/signin",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Internal server error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/auth/signin",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Passwords do not match",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/auth/signin",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "User signed in successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/auth/signin",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"bearerToken\": \"dolor \"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get server status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/health",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": "Check the health of the server"
+			},
+			"response": [
+				{
+					"name": "Server is ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/health",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"status\": \"Lorem nostrud sint ex\"\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "7fe66182-f174-4503-8beb-b5eb0472de8b",
+			"key": "URL",
+			"value": "/"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
